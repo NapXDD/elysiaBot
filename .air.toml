@@ -1,0 +1,20 @@
+# Config for Air hot reload: builds the bot into ./tmp/main and reruns on changes.
+root = "."
+tmp_dir = "tmp"
+
+[build]
+# Build the whole module so imports resolve correctly.
+cmd = "go build -o ./tmp/main ."
+bin = "tmp/main"
+full_bin = "./tmp/main"
+include_ext = ["go"]
+exclude_dir = ["tmp", "vendor", ".git"]
+delay = 1000
+stop_on_error = true
+
+[log]
+time = true
+
+[screen]
+clear_on_rebuild = true
+

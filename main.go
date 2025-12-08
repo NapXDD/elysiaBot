@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"os"
 
 	"github.com/bwmarrin/discordgo"
@@ -9,25 +9,26 @@ import (
 )
 
 func main() {
-    err := godotenv.Load()
-    if err != nil {
-        fmt.Println("Error loading .env file")
-    }
-    token := os.Getenv("DISCORD_TOKEN")
-    fmt.Println("Token length:", len(token)) // debug
+	_ = godotenv.Load() // best-effort .env load
 
-    dg, err := discordgo.New("Bot " + token)
-    if err != nil {
-        fmt.Println("error creating Discord session:", err)
-        return
-    }
+	token := os.Getenv("DISCORD_TOKEN")
+	if token == "" {
+		log.Fatal("DISCORD_TOKEN is empty")
+	}
 
-    err = dg.Open()
-    if err != nil {
-        fmt.Println("error opening connection:", err)
-        return
-    }
+	dg, err := discordgo.New("Bot " + token)
+	if err != nil {
+		log.Fatal("Error creating session:", err)
+	}
 
-    fmt.Println("Bot is running")
-    select {}
+	dg.AddHandler(onMessage)
+
+	err = dg.Open()
+	if err != nil {
+		log.Fatal("Error opening connection:", err)
+	}
+	defer dg.Close()
+
+	log.Println("Bot is running...")
+	select {} // keep alive
 }
