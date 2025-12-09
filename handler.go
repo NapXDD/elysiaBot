@@ -12,7 +12,7 @@ func onMessage(s *discordgo.Session, m *discordgo.MessageCreate) {
     }
 
     msg := strings.TrimSpace(strings.ToLower(m.Content))
-    if msg == "test" {
-        s.ChannelMessageSend(m.ChannelID, "what~")
+    if msg == "3" {
+        s.ChannelMessageSend(m.ChannelID, "6")
     }
 }

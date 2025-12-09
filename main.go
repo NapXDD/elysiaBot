@@ -4,30 +4,40 @@ import (
 	"log"
 	"os"
 
+	"flag"
+
 	"github.com/bwmarrin/discordgo"
 	"github.com/joho/godotenv"
 )
 
-func main() {
+// Bot parameters
+var (
+	GuildID        = flag.String("guild", "", "Test guild ID. If not passed - bot registers commands globally")
+	BotToken       = flag.String("token", "", "Bot access token")
+	RemoveCommands = flag.Bool("rmcmd", true, "Remove all commands after shutdowning or not")
+)
+
+var session *discordgo.Session
+
+func init() { flag.Parse() }
+
+func init() {
 	_ = godotenv.Load() // best-effort .env load
-
-	token := os.Getenv("DISCORD_TOKEN")
-	if token == "" {
-		log.Fatal("DISCORD_TOKEN is empty")
-	}
-
-	dg, err := discordgo.New("Bot " + token)
+	var err error
+	flag.Set("token", os.Getenv("DISCORD_TOKEN")) 
+	session, err = discordgo.New("Bot " + *BotToken)
 	if err != nil {
-		log.Fatal("Error creating session:", err)
+		log.Fatalf("Invalid bot parameters: %v", err)
 	}
+	log.Println(*BotToken, "hihi")
+}
 
-	dg.AddHandler(onMessage)
+func main() {
+	session.Open()
 
-	err = dg.Open()
-	if err != nil {
-		log.Fatal("Error opening connection:", err)
-	}
-	defer dg.Close()
+	session.AddHandler(onMessage)
+
+	defer session.Close()
 
 	log.Println("Bot is running...")
 	select {} // keep alive
