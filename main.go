@@ -72,5 +72,5 @@ func main() {
 		}
 	}
 
-	session.Close()
+	defer session.Close()
 }
