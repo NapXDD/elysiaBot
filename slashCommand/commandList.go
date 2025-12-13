@@ -1,4 +1,4 @@
-package main
+package slashcommand
 
 import (
 	"github.com/bwmarrin/discordgo"
@@ -9,13 +9,13 @@ var (
 	dmPermission                   = false
 	defaultMemberPermissions int64 = discordgo.PermissionManageGuild
 
-	commands = []*discordgo.ApplicationCommand{
+	Commands = []*discordgo.ApplicationCommand{
 		{
-			Name: "basic-command",
+			Name: "3",
 			// All commands and options must have a description
 			// Commands/options without description will fail the registration
 			// of the command.
-			Description: "Basic command",
+			Description: "what?",
 		},
 		{
 			Name:                     "permission-overview",
@@ -24,7 +24,7 @@ var (
 			DMPermission:             &dmPermission,
 		},
 		{
-			Name:        "basic-command-with-files",
+			Name:        "3-with-files",
 			Description: "Basic command with files",
 		},
 		{

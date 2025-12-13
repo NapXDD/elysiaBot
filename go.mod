@@ -1,4 +1,4 @@
-module mybot
+module elysiabot
 
 go 1.25.4
 

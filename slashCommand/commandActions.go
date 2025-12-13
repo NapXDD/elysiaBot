@@ -1,4 +1,4 @@
-package main
+package slashcommand
 
 import (
 	"errors"
@@ -10,25 +10,25 @@ import (
 )
 
 var (
-	commandHandlers = map[string]func(s *discordgo.Session, i *discordgo.InteractionCreate){
-	"basic-command": func(s *discordgo.Session, i *discordgo.InteractionCreate) {
+	CommandHandlers = map[string]func(s *discordgo.Session, i *discordgo.InteractionCreate){
+	"3": func(s *discordgo.Session, i *discordgo.InteractionCreate) {
 		s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
 			Type: discordgo.InteractionResponseChannelMessageWithSource,
 			Data: &discordgo.InteractionResponseData{
-				Content: "Hey there! Congratulations, you just executed your first slash command",
+				Content: "6",
 			},
 		})
 	},
-	"basic-command-with-files": func(s *discordgo.Session, i *discordgo.InteractionCreate) {
+	"3-with-files": func(s *discordgo.Session, i *discordgo.InteractionCreate) {
 		s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
 			Type: discordgo.InteractionResponseChannelMessageWithSource,
 			Data: &discordgo.InteractionResponseData{
-				Content: "Hey there! Congratulations, you just executed your first slash command with a file in the response",
+				Content: "Here a text!",
 				Files: []*discordgo.File{
 					{
 						ContentType: "text/plain",
 						Name:        "test.txt",
-						Reader:      strings.NewReader("Hello Discord!!"),
+						Reader:      strings.NewReader("6"),
 					},
 				},
 			},
